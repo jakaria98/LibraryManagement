@@ -5,6 +5,8 @@ import com.libraryManagement.LibraryManagement.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -32,8 +34,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     @Override
     public void deleteUser(String userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public boolean login(String userID, String password) {
+        Optional<User> user = userRepository.findById(userID);
+        if (user != null) {
+            return user.get().login(password);
+        }
+        return false;
     }
 }

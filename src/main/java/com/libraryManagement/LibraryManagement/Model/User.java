@@ -1,4 +1,7 @@
 package com.libraryManagement.LibraryManagement.Model;
+import com.libraryManagement.LibraryManagement.Service.UserService;
+
+import org.jetbrains.annotations.NotNull;
 
 public class User {
     private String userID;
@@ -53,15 +56,12 @@ public class User {
         return this.password.equals(password);
     }
 
-    public void updateProfile(String name, String emailAddress) {
-        this.name = name;
-        this.emailAddress = emailAddress;
-        // Logic to update profile in the database
+    public void updateProfile(User user, @NotNull UserService userService) {
+        // Update the user's profile attributes
+        this.name = user.getName();
+        this.emailAddress= user.getEmailAddress();
+        this.password= user.getPassword();
+        // Call the service method to update the user's profile in the database
+        userService.updateUser(user.getUserID(),this);
     }
-
-    public void logout() {
-        // Logic to logout the user
-    }
-
-
 }
