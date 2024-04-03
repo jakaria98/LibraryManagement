@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.libraryManagement.LibraryManagement.Service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -17,6 +19,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        // Hash the password before saving the user
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);
+
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
@@ -33,6 +39,10 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody User newUser) {
+        // Hash the password before updating the user
+        String hashedPassword = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
+        newUser.setPassword(hashedPassword);
+
         userService.updateUser(userId, newUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }

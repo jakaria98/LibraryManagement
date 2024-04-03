@@ -1,5 +1,6 @@
 package com.libraryManagement.LibraryManagement.Model;
 import com.libraryManagement.LibraryManagement.Service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,9 +40,9 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        // Hash the password using BCrypt and set it
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
-
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -51,9 +52,9 @@ public class User {
     }
 
     // Additional methods
-    public boolean login(String password) {
-        // Logic to validate login credentials
-        return this.password.equals(password);
+    public boolean login(String candidatePassword) {
+        // Use BCrypt's checkpw method to verify the provided password against the hashed password
+        return BCrypt.checkpw(candidatePassword, password);
     }
 
     public void updateProfile(User user, @NotNull UserService userService) {
