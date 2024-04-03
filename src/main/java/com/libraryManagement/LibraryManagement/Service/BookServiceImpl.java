@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
             existingBook.setTitle(updatedBook.getTitle());
             existingBook.setAuthor(updatedBook.getAuthor());
             existingBook.setGenre(updatedBook.getGenre());
-            existingBook.setAvailabilityStatus(updatedBook.isAvailable());
+            existingBook.setAvailabilityStatus(updatedBook.isAvailable(false));
             // Save the updated book
             bookRepository.save(existingBook);
         }

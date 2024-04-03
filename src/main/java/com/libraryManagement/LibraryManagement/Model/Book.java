@@ -47,7 +47,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public boolean isAvailable() {
+    public boolean isAvailable(boolean b) {
         return availabilityStatus;
     }
 
