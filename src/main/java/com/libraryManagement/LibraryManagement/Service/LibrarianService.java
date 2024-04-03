@@ -7,4 +7,6 @@ public interface LibrarianService {
     Librarian getLibrarianById(String librarianId);
     void updateLibrarian(String librarianId, Librarian updatedLibrarian);
     void deleteLibrarian(String librarianId);
+
+    void manageUser(String librarianId, String userId);
 }
