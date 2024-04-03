@@ -32,7 +32,7 @@ public class Student extends User {
     }
 
     public void borrowBook(Book book) {
-        if (book.isAvailable(false)) {
+        if (book.isAvailable(true)) {
             book.isAvailable(false);
             borrowedBooks.add(book);
         }
