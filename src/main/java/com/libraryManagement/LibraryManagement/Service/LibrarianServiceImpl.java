@@ -40,9 +40,4 @@ public class LibrarianServiceImpl implements LibrarianService {
     public void deleteLibrarian(String librarianId) {
         librarianRepository.deleteById(librarianId);
     }
-
-    @Override
-    public void manageUser(String librarianId, String userId) {
-
-    }
 }

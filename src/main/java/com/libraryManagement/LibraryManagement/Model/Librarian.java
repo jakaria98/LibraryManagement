@@ -1,8 +1,10 @@
 package com.libraryManagement.LibraryManagement.Model;
+import com.libraryManagement.LibraryManagement.Repo.UserRepository;
 
 import java.util.List;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Librarian extends User {
     private String employeeNumber;
@@ -52,7 +54,19 @@ public class Librarian extends User {
         }
     }
 
-    public void manageUser(String userId) {
-        // Logic to manage user
+    public void manageUser(User user, UserRepository userRepository) {
+        // Check if the user is already available
+        Optional<User> existingUser = userRepository.findById(user.getUserID());
+
+        if (existingUser.isPresent()) {
+            // Update user details
+            User updateUser = existingUser.get();
+            updateUser.setName(user.getName());
+            updateUser.setPassword(user.getPassword());
+            updateUser.setEmailAddress(user.getEmailAddress());
+            userRepository.save(updateUser); // Update existing user in the database
+        } else {
+            userRepository.save(user); // Add new user to the database
+        }
     }
 }
