@@ -1,10 +1,18 @@
 package com.libraryManagement.LibraryManagement.Model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
+@Document(collection = "shelves")
 public class Shelf {
+    @Id
+    @NotEmpty(message = "Shelf ID is required")
     private String shelfId;
+    @NotEmpty(message = "Genre is required")
     private String genre;
     private List<Book> books;
 

@@ -1,9 +1,16 @@
 package com.libraryManagement.LibraryManagement.Model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
+@Document(collection = "student")
 public class Student extends User {
+    @Id
+    @NotEmpty(message = "Student ID is required")
     private String studentId;
     private List<Book> borrowedBooks;
 

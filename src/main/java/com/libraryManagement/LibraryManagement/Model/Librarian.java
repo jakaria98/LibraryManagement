@@ -1,12 +1,18 @@
 package com.libraryManagement.LibraryManagement.Model;
 import com.libraryManagement.LibraryManagement.Repo.UserRepository;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 import java.util.List;
 import java.util.Optional;
 
+@Document(collection = "librarians")
 public class Librarian extends User {
+    @Id
+    @NotEmpty(message = "Employee Number is required")
     private String employeeNumber;
     private List<Shelf> shelves;
 

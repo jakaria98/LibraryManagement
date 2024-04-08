@@ -3,11 +3,21 @@ import com.libraryManagement.LibraryManagement.Service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
+
+@Document(collection = "users")
 public class User {
+    @Id
+    @NotEmpty(message = "User ID is required")
     private String userID;
+    @NotEmpty(message = "Name is required")
     private String name;
+    @NotEmpty(message = "Password is required")
     private String password;
+    @NotEmpty(message = "Email Address is required")
     private String emailAddress;
 
     // Constructor

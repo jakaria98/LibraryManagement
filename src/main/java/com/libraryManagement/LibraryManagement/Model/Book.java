@@ -1,7 +1,12 @@
 package com.libraryManagement.LibraryManagement.Model;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.validation.constraints.NotEmpty;
 
+@Document(collection = "books")
 public class Book {
+    @Id
     @NotEmpty(message = "Book ID is required")
     private String bookID;
     @NotEmpty(message = "Title is required")
