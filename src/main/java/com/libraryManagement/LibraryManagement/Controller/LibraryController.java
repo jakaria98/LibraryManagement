@@ -23,17 +23,13 @@ public class LibraryController {
     @GetMapping("/{libraryId}")
     public ResponseEntity<Library> getLibraryById(@PathVariable String libraryId) {
         Library library = libraryService.getLibraryById(libraryId);
-        if (library != null) {
-            return new ResponseEntity<>(library, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return library != null ? new ResponseEntity<>(library, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{libraryId}")
     public ResponseEntity<Void> updateLibrary(@PathVariable String libraryId, @RequestBody Library updatedLibrary) {
-        libraryService.updateLibrary(libraryId, updatedLibrary);
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean updated = libraryService.updateLibrary(libraryId, updatedLibrary);
+        return updated ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{libraryId}")

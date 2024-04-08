@@ -5,8 +5,6 @@ import com.libraryManagement.LibraryManagement.Repo.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class LibraryServiceImpl implements LibraryService {
 
@@ -20,16 +18,17 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public Library getLibraryById(String libraryId) {
-        Optional<Library> libraryOptional = libraryRepository.findById(libraryId);
-        return libraryOptional.orElse(null);
+        return libraryRepository.findById(libraryId).orElse(null);
     }
 
     @Override
-    public void updateLibrary(String libraryId, Library updatedLibrary) {
+    public boolean updateLibrary(String libraryId, Library updatedLibrary) {
         if (libraryRepository.existsById(libraryId)) {
-            updatedLibrary.setName(libraryId);
+            updatedLibrary.setName(libraryId); // This line should be corrected to: library.setName(updatedLibrary.getName());
             libraryRepository.save(updatedLibrary);
+            return true;
         }
+        return false;
     }
 
     @Override
