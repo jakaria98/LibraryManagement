@@ -20,8 +20,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public Librarian getLibrarianById(String librarianId) {
-        Optional<Librarian> optionalLibrarian = librarianRepository.findById(librarianId);
-        return optionalLibrarian.orElse(null);
+        return librarianRepository.findById(librarianId).orElse(null);
     }
 
     @Override
@@ -31,7 +30,8 @@ public class LibrarianServiceImpl implements LibrarianService {
             Librarian existingLibrarian = optionalLibrarian.get();
             existingLibrarian.setEmployeeNumber(updatedLibrarian.getEmployeeNumber());
             existingLibrarian.setName(updatedLibrarian.getName());
-            // Set other attributes as needed
+            existingLibrarian.setEmailAddress(updatedLibrarian.getEmailAddress());
+            // Set shelves if needed, consider deep update or reference update strategies
             librarianRepository.save(existingLibrarian);
         }
     }

@@ -23,11 +23,7 @@ public class LibrarianController {
     @GetMapping("/{librarianId}")
     public ResponseEntity<Librarian> getLibrarianById(@PathVariable String librarianId) {
         Librarian librarian = librarianService.getLibrarianById(librarianId);
-        if (librarian != null) {
-            return new ResponseEntity<>(librarian, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return librarian != null ? new ResponseEntity<>(librarian, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{librarianId}")

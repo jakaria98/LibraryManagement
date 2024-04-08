@@ -55,18 +55,16 @@ public class Librarian extends User {
     }
 
     public void manageUser(User user, UserRepository userRepository) {
-        // Check if the user is already available
         Optional<User> existingUser = userRepository.findById(user.getUserID());
 
         if (existingUser.isPresent()) {
-            // Update user details
             User updateUser = existingUser.get();
             updateUser.setName(user.getName());
             updateUser.setPassword(user.getPassword());
             updateUser.setEmailAddress(user.getEmailAddress());
-            userRepository.save(updateUser); // Update existing user in the database
+            userRepository.save(updateUser);
         } else {
-            userRepository.save(user); // Add new user to the database
+            userRepository.save(user);
         }
     }
 }
