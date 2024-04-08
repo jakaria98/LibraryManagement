@@ -19,11 +19,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        // Hash the password before saving the user
-        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(hashedPassword);
-
-        User createdUser = userService.createUser(user);
+        User createdUser = userService.createUser(user); // Move hashing logic inside service
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 

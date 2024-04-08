@@ -40,8 +40,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        // Hash the password using BCrypt and set it
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = password;
     }
     public String getEmailAddress() {
         return emailAddress;

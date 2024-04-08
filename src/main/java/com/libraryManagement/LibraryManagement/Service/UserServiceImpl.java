@@ -4,6 +4,7 @@ import com.libraryManagement.LibraryManagement.Model.User;
 import com.libraryManagement.LibraryManagement.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        // Hash the password before saving the new user
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
 
@@ -28,12 +32,13 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findById(userId).orElse(null);
         if (existingUser != null) {
             existingUser.setName(newUser.getName());
-            existingUser.setPassword(newUser.getPassword());
             existingUser.setEmailAddress(newUser.getEmailAddress());
+            // Hash the password before updating
+            String hashedPassword = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
+            existingUser.setPassword(hashedPassword);
             userRepository.save(existingUser);
         }
     }
-
 
     @Override
     public void deleteUser(String userId) {
@@ -43,8 +48,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean login(String userID, String password) {
         Optional<User> user = userRepository.findById(userID);
-        if (user != null) {
-            return user.get().login(password);
+        if (user.isPresent()) {
+            return BCrypt.checkpw(password, user.get().getPassword());
         }
         return false;
     }

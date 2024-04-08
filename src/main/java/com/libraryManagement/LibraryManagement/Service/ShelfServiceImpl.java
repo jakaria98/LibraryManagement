@@ -25,8 +25,9 @@ public class ShelfServiceImpl implements ShelfService {
     public void updateShelf(String shelfId, Shelf updatedShelf) {
         Shelf existingShelf = shelfRepository.findById(shelfId).orElse(null);
         if (existingShelf != null) {
-            updatedShelf.setShelfId(shelfId);
-            shelfRepository.save(updatedShelf);
+            existingShelf.setGenre(updatedShelf.getGenre());
+            existingShelf.setBooks(updatedShelf.getBooks());
+            shelfRepository.save(existingShelf);
         }
     }
 
