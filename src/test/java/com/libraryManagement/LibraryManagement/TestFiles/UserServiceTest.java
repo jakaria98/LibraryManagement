@@ -57,7 +57,7 @@ public class UserServiceTest {
 
     @Test
     void deleteUser_ShouldRemoveUser() {
-        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+//        when(userRepository.findById("1")).thenReturn(Optional.of(user));
         doNothing().when(userRepository).deleteById("1");
         userService.deleteUser("1");
         verify(userRepository, times(1)).deleteById("1");

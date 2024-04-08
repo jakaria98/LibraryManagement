@@ -29,11 +29,13 @@ public class LibraryServiceTest {
     private LibraryServiceImpl libraryService;
 
     private Library library;
+    private Library existingLibrary;
+
 
     @BeforeEach
     void setUp() {
         // Initialize your Library object here
-        library = new Library("Library Name", "Library Address");
+        library = new Library("1","Library Name", "Library Address");
     }
 
     @Test
@@ -54,12 +56,21 @@ public class LibraryServiceTest {
 
     @Test
     void updateLibrary_ShouldUpdateLibraryDetails() {
-        Library updatedLibrary = new Library("Updated Library Name", "Updated Address");
-        when(libraryRepository.findById("1")).thenReturn(Optional.of(library));
+        String libraryId = "1";
+        existingLibrary = new Library(libraryId,"Library Name", "Library Address");
+
+        // Simulate the library exists
+        when(libraryRepository.existsById(libraryId)).thenReturn(true);
+        // Return existing library when findById is called
+        when(libraryRepository.findById(libraryId)).thenReturn(Optional.of(existingLibrary));
+
+        Library updatedLibrary = new Library(libraryId, "Updated Library Name", "Updated Address");
+        // Assuming save updates the existing library and returns it
         when(libraryRepository.save(any(Library.class))).thenReturn(updatedLibrary);
 
-        boolean updated = libraryService.updateLibrary("1", updatedLibrary);
-        assertTrue(updated);
+        boolean result = libraryService.updateLibrary(libraryId, updatedLibrary);
+
+        assertTrue(result);
         verify(libraryRepository).save(libraryArgumentCaptor.capture());
         Library savedLibrary = libraryArgumentCaptor.getValue();
 
@@ -67,9 +78,10 @@ public class LibraryServiceTest {
         assertEquals("Updated Address", savedLibrary.getAddress());
     }
 
+
     @Test
     void deleteLibrary_ShouldRemoveLibrary() {
-        when(libraryRepository.existsById("1")).thenReturn(true);
+//        when(libraryRepository.existsById("1")).thenReturn(true);
         doNothing().when(libraryRepository).deleteById("1");
         libraryService.deleteLibrary("1");
         verify(libraryRepository, times(1)).deleteById("1");

@@ -67,7 +67,7 @@ public class BookServiceTest {
 
     @Test
     void deleteBook_ShouldRemoveBook() {
-        when(bookRepository.existsById("1")).thenReturn(true);
+//        when(bookRepository.existsById("1")).thenReturn(true);
         doNothing().when(bookRepository).deleteById("1");
 
         bookService.deleteBook("1");

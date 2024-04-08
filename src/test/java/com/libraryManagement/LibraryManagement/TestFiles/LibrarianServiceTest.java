@@ -57,7 +57,7 @@ public class LibrarianServiceTest {
 
     @Test
     void deleteLibrarian_ShouldRemoveLibrarian() {
-        when(librarianRepository.findById("1")).thenReturn(Optional.of(librarian));
+//        when(librarianRepository.findById("1")).thenReturn(Optional.of(librarian));
         doNothing().when(librarianRepository).deleteById("1");
         librarianService.deleteLibrarian("1");
         verify(librarianRepository, times(1)).deleteById("1");

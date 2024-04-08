@@ -4,16 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
+    private String ID;
     private String name;
     private String address;
     private List<Shelf> shelves;
 
-    public Library(String name, String address) {
+    public Library(String ID,String name, String address) {
+        this.ID = ID;
         this.name = name;
         this.address = address;
         this.shelves = new ArrayList<>();
     }
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
     public String getName() {
         return name;
     }

@@ -67,7 +67,7 @@ public class ShelfServiceTest {
 
     @Test
     void deleteShelf_ShouldRemoveShelf() {
-        when(shelfRepository.existsById("1")).thenReturn(true);
+//        when(shelfRepository.existsById("1")).thenReturn(true);
         doNothing().when(shelfRepository).deleteById("1");
 
         shelfService.deleteShelf("1");
