@@ -24,7 +24,7 @@ public class Student extends User {
     public List<Book> searchBook(String keyword, List<Book> availableBooks) {
         List<Book> foundBooks = new ArrayList<>();
         for (Book book : availableBooks) {
-            if (book.getTitle().contains(keyword) || book.getAuthor().contains(keyword)) {
+            if (book.getTitle().toLowerCase().contains(keyword.toLowerCase()) || book.getAuthor().toLowerCase().contains(keyword.toLowerCase())) {
                 foundBooks.add(book);
             }
         }
@@ -41,11 +41,11 @@ public class Student extends User {
     public void returnBook(Book book) {
         if (borrowedBooks.contains(book)) {
             borrowedBooks.remove(book);
-            book.isAvailable();
+            book.setAvailabilityStatus(true);
         }
     }
 
     public List<Book> getBorrowedBooks() {
-        return borrowedBooks;
+        return new ArrayList<>(borrowedBooks);
     }
 }

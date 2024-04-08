@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -26,11 +24,7 @@ public class StudentController {
     @GetMapping("/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable String studentId) {
         Student student = studentService.getStudentById(studentId);
-        if (student != null) {
-            return new ResponseEntity<>(student, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return student != null ? new ResponseEntity<>(student, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/{studentId}/borrow")
