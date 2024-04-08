@@ -32,8 +32,8 @@ public class Student extends User {
     }
 
     public void borrowBook(Book book) {
-        if (book.isAvailable(true)) {
-            book.isAvailable(false);
+        if (book.isAvailable()) {
+            book.setAvailabilityStatus(false);
             borrowedBooks.add(book);
         }
     }
@@ -41,7 +41,7 @@ public class Student extends User {
     public void returnBook(Book book) {
         if (borrowedBooks.contains(book)) {
             borrowedBooks.remove(book);
-            book.isAvailable(true);
+            book.isAvailable();
         }
     }
 

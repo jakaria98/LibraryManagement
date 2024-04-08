@@ -1,9 +1,14 @@
 package com.libraryManagement.LibraryManagement.Model;
+import javax.validation.constraints.NotEmpty;
 
 public class Book {
+    @NotEmpty(message = "Book ID is required")
     private String bookID;
+    @NotEmpty(message = "Title is required")
     private String title;
+    @NotEmpty(message = "Author is required")
     private String author;
+    @NotEmpty(message = "Genre is required")
     private String genre;
     private boolean availabilityStatus;
 
@@ -47,7 +52,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public boolean isAvailable(boolean b) {
+    public boolean isAvailable() {
         return availabilityStatus;
     }
 
@@ -55,7 +60,4 @@ public class Book {
         this.availabilityStatus = availabilityStatus;
     }
 
-    public void updateAvailabilityStatus(boolean status) {
-        this.availabilityStatus = status;
-    }
 }

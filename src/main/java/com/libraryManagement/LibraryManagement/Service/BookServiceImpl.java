@@ -5,6 +5,8 @@ import com.libraryManagement.LibraryManagement.Repo.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -18,21 +20,24 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookById(String bookId) {
-        return bookRepository.findById(bookId).orElse(null);
+        Optional<Book> book = bookRepository.findById(bookId);
+        if (book.get().isAvailable()) {
+            return book.get();
+        } else {
+            throw new RuntimeException("Book not found with id " + bookId);
+        }
     }
-
     @Override
     public void updateBook(String bookId, Book updatedBook) {
-        Book existingBook = bookRepository.findById(bookId).orElse(null);
-        if (existingBook != null) {
-            // Update the book attributes
-            existingBook.setTitle(updatedBook.getTitle());
-            existingBook.setAuthor(updatedBook.getAuthor());
-            existingBook.setGenre(updatedBook.getGenre());
-            existingBook.setAvailabilityStatus(updatedBook.isAvailable(false));
-            // Save the updated book
-            bookRepository.save(existingBook);
-        }
+        Book existingBook = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
+
+        existingBook.setTitle(updatedBook.getTitle());
+        existingBook.setAuthor(updatedBook.getAuthor());
+        existingBook.setGenre(updatedBook.getGenre());
+        existingBook.setAvailabilityStatus(updatedBook.isAvailable());
+
+        bookRepository.save(existingBook);
     }
 
     @Override
