@@ -24,9 +24,14 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public boolean updateLibrary(String libraryId, Library updatedLibrary) {
         if (libraryRepository.existsById(libraryId)) {
-            updatedLibrary.setName(libraryId); // This line should be corrected to: library.setName(updatedLibrary.getName());
-            libraryRepository.save(updatedLibrary);
-            return true;
+            Library existingLibrary = libraryRepository.findById(libraryId).orElse(null);
+            if (existingLibrary != null) {
+                existingLibrary.setName(updatedLibrary.getName());
+                existingLibrary.setAddress(updatedLibrary.getAddress());
+                existingLibrary.setShelves(updatedLibrary.getShelves());
+                libraryRepository.save(existingLibrary);
+                return true;
+            }
         }
         return false;
     }
